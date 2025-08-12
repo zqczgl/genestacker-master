@@ -15,7 +15,9 @@ public class GeneStackerGUI extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
         
         // Set up the scene and stage
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, 800, 800);
+        // Default to light theme
+        scene.getStylesheets().add(getClass().getResource("/styles/modern.css").toExternalForm());
         primaryStage.setTitle("Gene Stacker");
         primaryStage.setScene(scene);
         primaryStage.show();

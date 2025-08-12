@@ -35,11 +35,14 @@ from inside the `Genestacker` root directory
 |-- Genestacker
   |-- Genestacker-cli
   |-- Genestacker-lib
+  |-- Genestacker-gui
   |-- pom.xml
   |-- ...
 ```
 
-This will create a jar package `genestacker.jar`, including all dependencies, in a `bin` subdirectory.
+This will create two jar packages in the `bin` subdirectory:
+- `genestacker.jar` - Command line version (including all dependencies)
+- `genestacker-gui.jar` - Graphical user interface version (including all dependencies)
 
 R Interface
 ===========
@@ -55,13 +58,25 @@ A simple R interface `genestacker.R` is included in the root directory
 that can be used to run Gene Stacker from R. This script depends on `genestacker.jar` which should be available
 in the same directory or in a `bin` subdirectory, where it is created after running `mvn package`.
 
+To run the GUI version from R:
+```R
+source("genestacker.R")
+genestacker.gui()
+```
+
 Documentation
 =============
 
-For documentation and examples of how to use Gene Stacker, see http://genestacker.ugent.be. Running
+For documentation and examples of how to use Gene Stacker, see http://genestacker.ugent.be. 
 
+Running the command line version:
 ```
 java -jar bin/genestacker.jar -help
+```
+
+Running the graphical user interface version:
+```
+java -jar bin/genestacker-gui.jar
 ```
 
 prints brief usage information including an overview of all possible parameters.

@@ -8,69 +8,88 @@
           fx:controller="org.ugent.caagt.genestacker.gui.controllers.MainController"
           styleClass="main-grid">
     <padding>
-        <Insets top="15" right="15" bottom="15" left="15"/>
+        <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
-    <hgap>12</hgap>
-    <vgap>12</vgap>
+    <hgap>15</hgap>
+    <vgap>15</vgap>
+
+    <!-- 标题和主题切换 -->
+    <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="4"
+          alignment="CENTER" spacing="100">
+        <Label text="Gene Stacker" styleClass="title-label"/>
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Button text="亮色主题" onAction="#handleLightTheme"
+                    styleClass="theme-button, light-theme-button"/>
+            <Button text="暗色主题" onAction="#handleDarkTheme"
+                    styleClass="theme-button, dark-theme-button"/>
+        </HBox>
+    </HBox>
 
     <!-- 文件选择区域 -->
-    <Label text="输入文件:" GridPane.columnIndex="0" GridPane.rowIndex="0"
-           styleClass="required-label"/>
-    <TextField fx:id="inputFileField" GridPane.columnIndex="1" GridPane.rowIndex="0"
-               promptText="选择 XML 输入文件"/>
-    <Button text="浏览..." GridPane.columnIndex="2" GridPane.rowIndex="0"
-            onAction="#handleBrowseInput" styleClass="browse-button"/>
+    <Label text="输入文件:" GridPane.columnIndex="0" GridPane.rowIndex="1"
+           styleClass="required-label, form-label"/>
+    <TextField fx:id="inputFileField" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="2"
+               promptText="选择 XML 输入文件" styleClass="form-field"/>
+    <Button text="浏览..." GridPane.columnIndex="3" GridPane.rowIndex="1"
+            onAction="#handleBrowseInput" styleClass="browse-button, form-button"/>
 
-    <Label text="输出文件:" GridPane.columnIndex="0" GridPane.rowIndex="1"
-           styleClass="required-label"/>
-    <TextField fx:id="outputFileField" GridPane.columnIndex="1" GridPane.rowIndex="1"
-               promptText="输出文件名"/>
+    <Label text="输出文件:" GridPane.columnIndex="0" GridPane.rowIndex="2"
+           styleClass="required-label, form-label"/>
+    <TextField fx:id="outputFileField" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="3"
+               promptText="输出文件名 (.zip)" styleClass="form-field"/>
 
     <!-- 分隔线 -->
-    <Separator GridPane.columnSpan="3" GridPane.rowIndex="2"/>
+    <Separator GridPane.columnSpan="4" GridPane.rowIndex="3" styleClass="form-separator"/>
 
     <!-- 核心参数区域 -->
-    <Label text="最大世代数 (g):" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-    <TextField fx:id="generationsField" GridPane.columnIndex="1" GridPane.rowIndex="3"
-               text="3"/>
+    <!-- 第一行核心参数 -->
+    <Label text="最大世代数 (g):" GridPane.columnIndex="0" GridPane.rowIndex="4" 
+           styleClass="form-label"/>
+    <TextField fx:id="generationsField" GridPane.columnIndex="1" GridPane.rowIndex="4"
+               text="3" styleClass="form-field, numeric-field"/>
+    
+    <Label text="总体成功率 (s):" GridPane.columnIndex="2" GridPane.rowIndex="4"
+           styleClass="form-label"/>
+    <TextField fx:id="successRateField" GridPane.columnIndex="3" GridPane.rowIndex="4"
+               text="0.9" styleClass="form-field, numeric-field"/>
 
-    <Label text="总体成功率 (s):" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-    <TextField fx:id="successRateField" GridPane.columnIndex="1" GridPane.rowIndex="4"
-               text="0.9"/>
-
-    <!-- 可选参数区域 -->
-    <Label text="最大连锁相位模糊度 (lpa):" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <!-- 第二行核心参数 -->
+    <Label text="最大连锁相位模糊度 (lpa):" GridPane.columnIndex="0" GridPane.rowIndex="5"
+           styleClass="form-label"/>
     <TextField fx:id="lpaField" GridPane.columnIndex="1" GridPane.rowIndex="5"
-               promptText="可选参数"/>
-
-    <Label text="种群大小 (p):" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
-    <TextField fx:id="populationField" GridPane.columnIndex="1" GridPane.rowIndex="6"
-               promptText="可选参数"/>
+               promptText="可选参数" styleClass="form-field, optional-field"/>
+    
+    <Label text="种群大小 (p):" GridPane.columnIndex="2" GridPane.rowIndex="5"
+           styleClass="form-label"/>
+    <TextField fx:id="populationField" GridPane.columnIndex="3" GridPane.rowIndex="5"
+               promptText="可选参数" styleClass="form-field, optional-field"/>
 
     <!-- 分隔线 -->
-    <Separator GridPane.columnSpan="3" GridPane.rowIndex="7"/>
+    <Separator GridPane.columnSpan="4" GridPane.rowIndex="6" styleClass="form-separator"/>
 
     <!-- 选项区域 -->
     <CheckBox fx:id="homozygousIdeotypeParentsCheckbox"
               text="要求纯合理想型亲本 (hip)"
-              GridPane.columnSpan="2" GridPane.rowIndex="8"/>
+              GridPane.columnSpan="4" GridPane.rowIndex="7"
+              styleClass="form-checkbox"/>
 
     <!-- 分隔线 -->
-    <Separator GridPane.columnSpan="3" GridPane.rowIndex="9"/>
+    <Separator GridPane.columnSpan="4" GridPane.rowIndex="8" styleClass="form-separator"/>
 
     <!-- 执行按钮 -->
-    <HBox GridPane.columnSpan="3" GridPane.rowIndex="10"
-          alignment="CENTER" spacing="20">
+    <HBox GridPane.columnSpan="4" GridPane.rowIndex="9"
+          alignment="CENTER" spacing="25">
         <Button text="运行 Gene Stacker" onAction="#handleRun"
-                styleClass="run-button"/>
+                styleClass="run-button, primary-button"/>
     </HBox>
 
     <!-- 分隔线 -->
-    <Separator GridPane.columnSpan="3" GridPane.rowIndex="11"/>
+    <Separator GridPane.columnSpan="4" GridPane.rowIndex="10" styleClass="form-separator"/>
 
     <!-- 输出区域 -->
-    <Label text="执行输出:" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
-    <TextArea fx:id="outputArea" prefRowCount="12" prefColumnCount="60"
-              wrapText="true" GridPane.columnSpan="3" GridPane.rowIndex="13"
-              styleClass="output-area"/>
+    <Label text="运行日志:" GridPane.columnIndex="0" GridPane.rowIndex="11"
+           styleClass="form-label"/>
+    <TextArea fx:id="outputArea" prefRowCount="600" prefColumnCount="600"
+              wrapText="true" GridPane.columnSpan="4" GridPane.rowIndex="12"
+              styleClass="output-area, form-textarea"/>
 </GridPane>

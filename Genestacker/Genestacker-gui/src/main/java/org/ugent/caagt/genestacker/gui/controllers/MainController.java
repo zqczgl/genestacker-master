@@ -2,8 +2,10 @@ package org.ugent.caagt.genestacker.gui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.scene.Scene;
 import org.ugent.caagt.genestacker.gui.GeneStackerGUI;
 
 import java.awt.Desktop;
@@ -50,6 +52,20 @@ public class MainController {
     private FileChooser fileChooser = new FileChooser();
     
     @FXML
+    private void handleLightTheme(ActionEvent event) {
+        Scene scene = ((Node) event.getSource()).getScene();
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource("/styles/modern.css").toExternalForm());
+    }
+    
+    @FXML
+    private void handleDarkTheme(ActionEvent event) {
+        Scene scene = ((Node) event.getSource()).getScene();
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource("/styles/modern-dark.css").toExternalForm());
+    }
+    
+    @FXML
     private void handleBrowseInput(ActionEvent event) {
         File file = fileChooser.showOpenDialog(inputFileField.getScene().getWindow());
         if (file != null) {
@@ -69,6 +85,8 @@ public class MainController {
     private void handleRun(ActionEvent event) {
         // Clear previous output
         outputArea.clear();
+        outputArea.appendText("Starting Gene Stacker execution...\n");
+        outputArea.appendText("===============================\n");
         
         try {
             // Validate inputs
@@ -114,31 +132,76 @@ public class MainController {
             // Run Gene Stacker in a separate thread to prevent UI freezing
             Thread geneStackerThread = new Thread(() -> {
                 try {
-                    // Capture system output
-                    java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
-                    java.io.PrintStream ps = new java.io.PrintStream(baos);
-                    java.io.PrintStream old = System.out;
-                    System.setOut(ps);
+                    // Create a custom PrintStream to capture output in real-time
+                    java.io.PrintStream customOut = new java.io.PrintStream(new java.io.OutputStream() {
+                        @Override
+                        public void write(int b) {
+                            // This method is not efficient for single bytes, but we override the string write method
+                        }
+                        
+                        @Override
+                        public void write(byte[] buf, int off, int len) {
+                            String message = new String(buf, off, len);
+                            javafx.application.Platform.runLater(() -> {
+                                outputArea.appendText(message);
+                                // Auto-scroll to bottom
+                                outputArea.positionCaret(outputArea.getText().length());
+                                outputArea.selectPositionCaret(outputArea.getText().length());
+                            });
+                        }
+                    });
+                    
+                    // Save original streams
+                    java.io.PrintStream oldOut = System.out;
+                    java.io.PrintStream oldErr = System.err;
+                    
+                    // Redirect both stdout and stderr to our custom stream
+                    System.setOut(customOut);
+                    System.setErr(customOut);
+                    
+                    // Record start time
+                    long startTime = System.currentTimeMillis();
+                    javafx.application.Platform.runLater(() -> {
+                        outputArea.appendText("Execution started at: " + new java.util.Date(startTime) + "\n");
+                    });
                     
                     // Run Gene Stacker
                     GeneStackerGUI.runGeneStacker(args);
                     
-                    // Restore standard output
-                    System.out.flush();
-                    System.setOut(old);
+                    // Record end time
+                    long endTime = System.currentTimeMillis();
+                    long duration = endTime - startTime;
                     
-                    // Update UI with output
+                    // Restore original streams
+                    System.setOut(oldOut);
+                    System.setErr(oldErr);
+                    
+                    // Update UI with completion message
                     javafx.application.Platform.runLater(() -> {
-                        outputArea.appendText(baos.toString());
-                        outputArea.appendText("\nGene Stacker execution completed.\n");
+                        outputArea.appendText("\n===============================\n");
+                        outputArea.appendText("Gene Stacker execution completed successfully!\n");
+                        outputArea.appendText("Execution time: " + String.format("%.2f", duration / 1000.0) + " seconds\n");
+                        outputArea.appendText("===============================\n");
+                        
+                        // Show completion notification
+                        showCompletionNotification(duration);
                         
                         // Try to open the result PDF file
                         openResultPDF(outputFile);
                     });
                 } catch (Exception e) {
+                    // Restore original streams in case of error
+                    System.setOut(System.out);
+                    System.setErr(System.err);
+                    
                     javafx.application.Platform.runLater(() -> {
+                        outputArea.appendText("\n===============================\n");
                         outputArea.appendText("Error running Gene Stacker: " + e.getMessage() + "\n");
+                        outputArea.appendText("===============================\n");
                         e.printStackTrace();
+                        
+                        // Show error notification
+                        showErrorNotification(e.getMessage());
                     });
                 }
             });
@@ -219,5 +282,49 @@ public class MainController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    
+    /**
+     * Shows a completion notification when Gene Stacker finishes execution
+     */
+    private void showCompletionNotification(long duration) {
+        try {
+            // Try to show system notification
+            System.out.println("Gene Stacker execution completed successfully!");
+            
+            // Show a simple dialog notification
+            javafx.application.Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Execution Completed");
+                alert.setHeaderText("运行成功");
+                alert.setContentText("运行耗时 " + String.format("%.2f", duration / 1000.0) + "秒");
+                alert.showAndWait();
+            });
+        } catch (Exception e) {
+            // Silently ignore notification errors
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Shows an error notification when Gene Stacker encounters an error
+     */
+    private void showErrorNotification(String errorMessage) {
+        try {
+            // Try to show system notification
+            System.err.println("Gene Stacker encountered an error: " + errorMessage);
+            
+            // Show a simple dialog notification
+            javafx.application.Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Execution Error");
+                alert.setHeaderText("Gene Stacker encountered an error");
+                alert.setContentText("Error: " + errorMessage);
+                alert.showAndWait();
+            });
+        } catch (Exception e) {
+            // Silently ignore notification errors
+            e.printStackTrace();
+        }
     }
 }

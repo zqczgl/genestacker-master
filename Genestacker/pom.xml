@@ -37,8 +37,15 @@
                     </filesets>
                 </configuration>
             </plugin>
-            <!-- create javadoc jars -->
-
+            <!-- create executable JAR for GUI as main entry point -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>org.ugent.caagt.genestacker.gui.GeneStackerGUI</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <modules>

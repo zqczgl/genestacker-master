@@ -196,6 +196,22 @@ genestacker.jar <- function(){
   }
   # return path
   return(cli)
+}
+
+# run Gene Stacker GUI
+genestacker.gui <- function(){
+  # get path to Gene Stacker GUI jar file
+  gui = "genestacker-gui.jar"
+  # try bin folder if not found in current directory
+  if(!file.exists(gui)){
+    gui = "bin/genestacker-gui.jar"
+  }
+  # if GUI not found, terminate with error message
+  if(!file.exists(gui)){
+    stop("Gene Stacker GUI jar file not found.")
+  }
+  # run GUI
+  system(paste("java -jar", gui))
 } 
 
 
