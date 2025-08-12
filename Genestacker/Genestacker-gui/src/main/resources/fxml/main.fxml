@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="org.ugent.caagt.genestacker.gui.controllers.MainController"
+          styleClass="main-grid">
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+    <hgap>12</hgap>
+    <vgap>12</vgap>
+
+    <!-- 文件选择区域 -->
+    <Label text="输入文件:" GridPane.columnIndex="0" GridPane.rowIndex="0"
+           styleClass="required-label"/>
+    <TextField fx:id="inputFileField" GridPane.columnIndex="1" GridPane.rowIndex="0"
+               promptText="选择 XML 输入文件"/>
+    <Button text="浏览..." GridPane.columnIndex="2" GridPane.rowIndex="0"
+            onAction="#handleBrowseInput" styleClass="browse-button"/>
+
+    <Label text="输出文件:" GridPane.columnIndex="0" GridPane.rowIndex="1"
+           styleClass="required-label"/>
+    <TextField fx:id="outputFileField" GridPane.columnIndex="1" GridPane.rowIndex="1"
+               promptText="输出文件名"/>
+
+    <!-- 分隔线 -->
+    <Separator GridPane.columnSpan="3" GridPane.rowIndex="2"/>
+
+    <!-- 核心参数区域 -->
+    <Label text="最大世代数 (g):" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <TextField fx:id="generationsField" GridPane.columnIndex="1" GridPane.rowIndex="3"
+               text="3"/>
+
+    <Label text="总体成功率 (s):" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+    <TextField fx:id="successRateField" GridPane.columnIndex="1" GridPane.rowIndex="4"
+               text="0.9"/>
+
+    <!-- 可选参数区域 -->
+    <Label text="最大连锁相位模糊度 (lpa):" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <TextField fx:id="lpaField" GridPane.columnIndex="1" GridPane.rowIndex="5"
+               promptText="可选参数"/>
+
+    <Label text="种群大小 (p):" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+    <TextField fx:id="populationField" GridPane.columnIndex="1" GridPane.rowIndex="6"
+               promptText="可选参数"/>
+
+    <!-- 分隔线 -->
+    <Separator GridPane.columnSpan="3" GridPane.rowIndex="7"/>
+
+    <!-- 选项区域 -->
+    <CheckBox fx:id="homozygousIdeotypeParentsCheckbox"
+              text="要求纯合理想型亲本 (hip)"
+              GridPane.columnSpan="2" GridPane.rowIndex="8"/>
+
+    <!-- 分隔线 -->
+    <Separator GridPane.columnSpan="3" GridPane.rowIndex="9"/>
+
+    <!-- 执行按钮 -->
+    <HBox GridPane.columnSpan="3" GridPane.rowIndex="10"
+          alignment="CENTER" spacing="20">
+        <Button text="运行 Gene Stacker" onAction="#handleRun"
+                styleClass="run-button"/>
+    </HBox>
+
+    <!-- 分隔线 -->
+    <Separator GridPane.columnSpan="3" GridPane.rowIndex="11"/>
+
+    <!-- 输出区域 -->
+    <Label text="执行输出:" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
+    <TextArea fx:id="outputArea" prefRowCount="12" prefColumnCount="60"
+              wrapText="true" GridPane.columnSpan="3" GridPane.rowIndex="13"
+              styleClass="output-area"/>
+</GridPane>
