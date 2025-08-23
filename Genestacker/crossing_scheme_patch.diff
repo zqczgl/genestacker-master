@@ -1,0 +1,19 @@
+--- a/Genestacker-lib/src/main/java/org/ugent/caagt/genestacker/search/CrossingScheme.java
++++ b/Genestacker-lib/src/main/java/org/ugent/caagt/genestacker/search/CrossingScheme.java
+@@ -89,8 +89,13 @@ public class CrossingScheme {
+      */
+     public CrossingScheme(PopulationSizeTools popSizeTools, PlantNode finalPlantNode){
+         this.popSizeTools = popSizeTools;
+-        this.numGenerations = finalPlantNode.getGeneration();
+-        this.finalPlantNode = finalPlantNode;
++        // Handle null finalPlantNode (e.g., for dummy root nodes)
++        if (finalPlantNode != null) {
++            this.numGenerations = finalPlantNode.getGeneration();
++            this.finalPlantNode = finalPlantNode;
++        } else {
++            this.numGenerations = 0;
++            this.finalPlantNode = null;
++        }
+         seedLotIndex = new HashMap<>();
+         seedLotsPerID = new HashMap<>();
+         plantIndex = new HashMap<>();

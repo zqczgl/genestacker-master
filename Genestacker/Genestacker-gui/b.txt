@@ -1,0 +1,7 @@
+--name "GeneStacker"
+--type app-image
+--input target
+--main-jar Genestacker-gui-1.9.jar
+--icon icon.ico
+--win-console
+--verbose

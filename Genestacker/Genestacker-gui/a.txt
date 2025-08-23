@@ -1,0 +1,10 @@
+--name "GeneStacker"
+--type msi
+--input target
+--main-jar Genestacker-gui-1.9.jar
+--dest output
+--win-console     
+--icon icon.ico   
+--app-version 1.9  
+--win-dir-chooser
+--win-shortcut

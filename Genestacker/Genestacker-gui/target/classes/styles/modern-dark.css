@@ -1,0 +1,315 @@
+/* Dark theme CSS for Gene Stacker GUI */
+
+/* Root styling */
+.main-grid {
+    -fx-background-color: #1e1e2e;
+    -fx-padding: 25px;
+    -fx-hgap: 15px;
+    -fx-vgap: 15px;
+}
+
+/* Typography */
+.label {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #e0e0e0;
+}
+
+.title-label {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #e0e0e0;
+}
+
+.form-label {
+    -fx-font-size: 14px;
+    -fx-padding: 8px 0;
+}
+
+.required-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #4dabf7;
+}
+
+/* Text Fields */
+.text-field, .form-field {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #2d2d3d;
+    -fx-border-color: #444455;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 10px 14px;
+    -fx-prompt-text-fill: #a0a0b0;
+    -fx-text-fill: #f0f0f0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 2, 0, 0, 1);
+}
+
+.text-field:focused, .form-field:focused {
+    -fx-border-color: #4dabf7;
+    -fx-border-width: 2px;
+    -fx-padding: 9px 13px;
+    -fx-effect: dropshadow(gaussian, rgba(77, 171, 247, 0.4), 6, 0, 0, 0);
+}
+
+.numeric-field {
+    -fx-background-color: #2a2a3a;
+}
+
+.optional-field {
+    -fx-background-color: #282838;
+    -fx-border-style: dashed;
+}
+
+/* Buttons */
+.button, .form-button {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-background-color: #4dabf7;
+    -fx-text-fill: #1e1e2e;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-padding: 12px 24px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 2);
+}
+
+.button:hover, .form-button:hover {
+    -fx-background-color: #339af0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 6, 0, 0, 3);
+}
+
+.button:pressed, .form-button:pressed {
+    -fx-background-color: #228be6;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+}
+
+.browse-button {
+    -fx-background-color: #e599f7;
+    -fx-text-fill: #1e1e2e;
+    -fx-padding: 10px 20px;
+}
+
+.browse-button:hover {
+    -fx-background-color: #da77f2;
+}
+
+.run-button, .primary-button {
+    -fx-background-color: linear-gradient(to bottom, #69db7c, #51cf66);
+    -fx-text-fill: #1e1e2e;
+    -fx-padding: 14px 36px;
+    -fx-font-size: 16px;
+    -fx-effect: dropshadow(gaussian, rgba(105, 219, 124, 0.4), 8, 0, 0, 4);
+}
+
+.run-button:hover, .primary-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #5bdb95, #40c057);
+    -fx-effect: dropshadow(gaussian, rgba(105, 219, 124, 0.6), 10, 0, 0, 5);
+}
+
+/* Theme Buttons */
+.theme-button {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-background-color: #3d3d4d;
+    -fx-text-fill: #e0e0e0;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-padding: 6px 12px;
+    -fx-cursor: hand;
+}
+
+.theme-button:hover {
+    -fx-background-color: #4d4d5d;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
+}
+
+.light-theme-button {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #1e1e2e;
+    -fx-border-color: #4dabf7;
+    -fx-border-width: 1px;
+}
+
+.dark-theme-button {
+    -fx-background-color: #2d2d3d;
+    -fx-border-color: #444455;
+    -fx-border-width: 1px;
+}
+
+/* Check Box */
+.check-box, .form-checkbox {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #e0e0e0;
+    -fx-padding: 10px 0;
+}
+
+.check-box .box, .form-checkbox .box {
+    -fx-background-color: #2d2d3d;
+    -fx-border-color: #444455;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 1px;
+}
+
+.check-box:selected .mark, .form-checkbox:selected .mark {
+    -fx-background-color: #4dabf7;
+}
+
+.check-box:hover .box, .form-checkbox:hover .box {
+    -fx-border-color: #4dabf7;
+}
+
+/* Text Area */
+.text-area, .output-area, .form-textarea {
+    -fx-font-family: "Consolas", "Monaco", "Courier New", monospace;
+    -fx-font-size: 12px;
+    -fx-background-color: #2d2d3d;
+    -fx-border-color: #444455;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 12px;
+    -fx-text-fill: #f0f0f0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
+}
+
+.text-area .content, .output-area .content, .form-textarea .content {
+    -fx-background-color: transparent;
+}
+
+/* Separator */
+.separator, .form-separator {
+    -fx-background-color: #333344;
+    -fx-padding: 8px 0;
+}
+
+/* Scroll Bars */
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #444455;
+    -fx-background-radius: 8px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #555566;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* Tooltip */
+.tooltip {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 12px;
+    -fx-background-color: #2d2d3d;
+    -fx-text-fill: #f0f0f0;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 12px;
+    -fx-border-color: #444455;
+    -fx-border-width: 1px;
+}
+
+/* Radio Buttons */
+.radio-button {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #e0e0e0;
+    -fx-padding: 5px 0;
+}
+
+.radio-button .radio {
+    -fx-background-color: #2d2d3d;
+    -fx-border-color: #444455;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.radio-button:selected .radio {
+    -fx-background-color: #4dabf7;
+    -fx-border-color: #4dabf7;
+}
+
+.radio-button:selected .dot {
+    -fx-background-color: #1e1e2e;
+}
+
+/* TitledPane */
+.titled-pane {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #e0e0e0;
+}
+
+.titled-pane > .title {
+    -fx-background-color: #2d2d3d;
+    -fx-border-color: #444455;
+    -fx-border-width: 1px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-padding: 8px 12px;
+}
+
+.titled-pane > .content {
+    -fx-border-color: #444455;
+    -fx-border-width: 0 1px 1px 1px;
+    -fx-border-radius: 0 0 6px 6px;
+    -fx-background-radius: 0 0 6px 6px;
+    -fx-background-color: #252535;
+    -fx-padding: 10px;
+}
+
+/* Heuristics Summary */
+.heuristics-summary-label {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #a0a0b0;
+    -fx-padding: 10px 0;
+}
+
+/* Dialog Styles */
+.dialog-grid {
+    -fx-background-color: #1e1e2e;
+    -fx-padding: 25px;
+    -fx-hgap: 15px;
+    -fx-vgap: 15px;
+}
+
+.dialog-title {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #e0e0e0;
+}
+
+.dialog-button {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-background-color: #4dabf7;
+    -fx-text-fill: #1e1e2e;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 2);
+}
+
+.dialog-button:hover {
+    -fx-background-color: #339af0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 6, 0, 0, 3);
+}
+
+.dialog-button:pressed {
+    -fx-background-color: #228be6;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+}

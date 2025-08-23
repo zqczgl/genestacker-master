@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="org.ugent.caagt.genestacker.gui.controllers.HeuristicsDialogController"
+          styleClass="dialog-grid" prefWidth="800">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <hgap>15</hgap>
+    <vgap>15</vgap>
+
+    <!-- 标题 -->
+    <Label text="启发式策略配置" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3"
+           styleClass="dialog-title"/>
+
+    <!-- 分隔线 -->
+    <Separator GridPane.columnSpan="15" GridPane.rowIndex="1" styleClass="form-separator"/>
+
+    <!-- 预设模式选择 -->
+    <Label text="预设模式:" GridPane.columnIndex="0" GridPane.rowIndex="2"
+           styleClass="form-label"/>
+    <VBox GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="5" spacing="10">
+        <RadioButton fx:id="balancedModeRadio" text="平衡模式 (默认)" selected="true"/>
+        <RadioButton fx:id="qualityModeRadio" text="质量优先"/>
+        <RadioButton fx:id="speedModeRadio" text="速度优先"/>
+        <RadioButton fx:id="extremeSpeedModeRadio" text="极限速度"/>
+        <fx:define>
+            <ToggleGroup fx:id="presetModeGroup"/>
+        </fx:define>
+    </VBox>
+
+    <!-- 分隔线 -->
+    <Separator GridPane.columnSpan="15" GridPane.rowIndex="3" styleClass="form-separator"/>
+
+    <!-- 算法选择 -->
+    <Label text="算法选择:" GridPane.columnIndex="0" GridPane.rowIndex="4"
+           styleClass="form-label"/>
+    <VBox GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="5" spacing="10">
+        <RadioButton fx:id="branchAndBoundRadio" text="Branch and Bound (默认)" selected="true"/>
+        <RadioButton fx:id="mctsRadio" text="MCTS (蒙特卡洛树搜索)"/>
+        <fx:define>
+            <ToggleGroup fx:id="algorithmGroup"/>
+        </fx:define>
+    </VBox>
+
+    <!-- 分隔线 -->
+    <Separator GridPane.columnSpan="15" GridPane.rowIndex="5" styleClass="form-separator"/>
+
+    <!-- 启发式选项 -->
+    <Label text="启发式选项:" GridPane.columnIndex="0" GridPane.rowIndex="6"
+           styleClass="form-label"/>
+    <VBox GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.columnSpan="4" spacing="8">
+        <GridPane hgap="10" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" percentWidth="33.3"/>
+                <ColumnConstraints hgrow="ALWAYS" percentWidth="33.3"/>
+                <ColumnConstraints hgrow="ALWAYS" percentWidth="33.3"/>
+            </columnConstraints>
+
+            <!-- 第一行 -->
+            <CheckBox fx:id="h0Checkbox" text="H0: 初始植株过滤" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <CheckBox fx:id="h1aCheckbox" text="H1a: 弱改进启发式" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <CheckBox fx:id="h1bCheckbox" text="H1b: 强改进启发式" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+
+            <!-- 第二行 -->
+            <CheckBox fx:id="h2aCheckbox" text="H2a: 种子批过滤(弱)" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <CheckBox fx:id="h2bCheckbox" text="H2b: 种子批过滤(强)" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <CheckBox fx:id="h3Checkbox" text="H3: 最优子方案" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+            <!-- 第三行 -->
+            <CheckBox fx:id="h3s1Checkbox" text="H3s1/H3s2: 播种模式" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <CheckBox fx:id="h4Checkbox" text="H4: 最优种子批" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <CheckBox fx:id="h5Checkbox" text="H5/H5c: 启发式构建" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+
+            <!-- 第四行 -->
+            <CheckBox fx:id="h6Checkbox" text="H6: 种群大小界限" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+
+            <!-- 最大交叉数设置 -->
+            <HBox fx:id="maxCrossoversContainer" alignment="CENTER_LEFT" spacing="5"
+                  GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="2"
+                  visible="false">
+                <Label text="最大交叉数:"/>
+                <TextField fx:id="maxCrossoversField" prefWidth="80" text="10"/>
+            </HBox>
+        </GridPane>
+    </VBox>
+
+    <!-- 分隔线 -->
+    <Separator GridPane.columnSpan="15" GridPane.rowIndex="7" styleClass="form-separator"/>
+
+    <!-- 按钮区域 -->
+    <HBox GridPane.columnSpan="15" GridPane.rowIndex="8"
+          alignment="CENTER" spacing="25">
+        <Button fx:id="okButton" text="确定" styleClass="dialog-button, primary-button"/>
+        <Button fx:id="cancelButton" text="取消" styleClass="dialog-button"/>
+        <Button fx:id="resetButton" text="重置" styleClass="dialog-button"/>
+    </HBox>
+</GridPane>
