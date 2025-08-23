@@ -32,6 +32,7 @@ import org.ugent.caagt.genestacker.search.*;
 import org.ugent.caagt.genestacker.search.bb.*;
 import org.ugent.caagt.genestacker.search.bb.heuristics.*;
 import org.ugent.caagt.genestacker.search.constraints.*;
+import org.ugent.caagt.genestacker.search.MCTS;
 import org.ugent.caagt.genestacker.util.GenestackerConstants;
 import org.ugent.caagt.genestacker.util.TimeFormatting;
 
@@ -63,6 +64,7 @@ public class Main
     // parameter values
     private double successProb;
     private String outputFile;
+    private String outputDir;
     private String inputFile;
     // constraints
     private List<Constraint> constraints;
@@ -92,6 +94,7 @@ public class Main
     private boolean minimizePopSizeOnly;
     private int numThreads;
     private boolean writeIntermediateOutput;
+    private boolean useMCTS = false;
     
     // total runtime (ms)
     private long totalRuntime;
@@ -332,6 +335,12 @@ public class Main
         Option intOutputOption = new Option("int", "intermediate-output", false, "create and update intermediate ZIP package whenever the current Pareto frontier has changed,"
                                                                                 + " where a suffix \"-int\" is appended to the output file name for this intermediate file; note that this"
                                                                                 + " is expected to slow down the application (intermediate output file is deleted if the search completes)");
+        Option outputDirOption = OptionBuilder.withLongOpt("output-dir")
+                                                  .hasArg()
+                                                  .withArgName("dir")
+                                                  .withDescription("output directory for the result file (default: current directory)")
+                                                  .create("od");
+        Option mctsOption = new Option("mcts", "mcts", false, "use the MCTS (Monte Carlo Tree Search) algorithm instead of the default Branch and Bound algorithm");
         
         miscOptions = new Options();
         miscOptions.addOption(graphFileFormatOption);
@@ -344,6 +353,8 @@ public class Main
         miscOptions.addOption(versionOption);
         miscOptions.addOption(helpOption);
         miscOptions.addOption(intOutputOption);
+        miscOptions.addOption(outputDirOption);
+        miscOptions.addOption(mctsOption);
         // indicate which options have to be checked prior to the other options
         checkFirstOptions = new Options();
         checkFirstOptions.addOption(versionOption);
@@ -414,6 +425,10 @@ public class Main
         System.out.println("");
 	System.out.println("\t\tgenestacker --max-gen 3 --success-prob 0.9 input.xml output");
         System.out.println("");
+        System.out.println("\tTo specify an output directory, use the -od,--output-dir option:");
+        System.out.println("");
+        System.out.println("\t\tgenestacker -g 3 -s 0.9 -od /path/to/output input.xml output");
+        System.out.println("");
         
         HelpFormatter f = new HelpFormatter();
         f.setWidth(100);
@@ -437,7 +452,7 @@ public class Main
         f.printHelp("Verbosity Options:", verbosityOptions);
         System.out.println("");
         
-        // print misc options
+        // misc options
         f.printHelp("Misc Options:", miscOptions);
         System.out.println("");
         
@@ -837,6 +852,21 @@ public class Main
         // check for intermediate-output
         writeIntermediateOutput = cmd.hasOption("intermediate-output");
         
+        // check for output directory
+        if(cmd.hasOption("output-dir")){
+            outputDir = cmd.getOptionValue("output-dir");
+            // ensure output directory ends with a separator
+            if(!outputDir.endsWith(System.getProperty("file.separator"))){
+                outputDir += System.getProperty("file.separator");
+            }
+        } else {
+            // default to current directory
+            outputDir = "";
+        }
+        
+        // check for MCTS option
+        useMCTS = cmd.hasOption("mcts");
+        
     }
     
     private void search() throws GenestackerException, IOException, ArchiveException{
@@ -850,9 +880,12 @@ public class Main
             outputFile += ".zip";
         }
         
+        // prepend output directory if specified
+        String fullOutputPath = outputDir + outputFile;
+        
         // check if output file already exists
-        if(Files.exists(Paths.get(outputFile))){
-            throw new FileAlreadyExistsException("Output file '" + outputFile + "' already exists.");
+        if(Files.exists(Paths.get(fullOutputPath))){
+            throw new FileAlreadyExistsException("Output file '" + fullOutputPath + "' already exists.");
         }
                 
         /********************/
@@ -880,10 +913,17 @@ public class Main
         logger.info("Total runtime = {}", TimeFormatting.formatTime(totalRuntime));
         
         // output results
-        output(frontier, outputFile);
+        output(frontier, fullOutputPath);
     }
     
     private ParetoFrontier runBranchAndBound(GenestackerInput input, long timeLimit) throws GenestackerException{
+        // Check if MCTS is requested
+        if (useMCTS) {
+            logger.info("Running MCTS engine ...");
+            MCTS mctsEngine = new MCTS(input);
+            return mctsEngine.search(timeLimit, numThreads);
+        }
+        
         // print applied heuristics/filters info
         logger.info("Running Branch and Bound engine {} ...", formatActivatedHeuristicsInfo());
         

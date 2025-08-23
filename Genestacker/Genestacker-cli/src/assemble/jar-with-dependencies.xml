@@ -22,15 +22,4 @@
 		    </unpackOptions>
 		</dependencySet>
 	</dependencySets>
-	<!-- add Gene Stacker LICENSE and NOTICE files (with dependencies) -->
-	<files>
-		<file>
-			<source>../dist/resources/NOTICE</source>
-			<outputDirectory>META-INF</outputDirectory>
-		</file>
-		<file>
-			<source>../dist/resources/LICENSE</source>
-			<outputDirectory>META-INF</outputDirectory>
-		</file>
-	</files>
 </assembly>

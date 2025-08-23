@@ -24,4 +24,6 @@ public class GenestackerConstants {
     
     public static final int UNLIMITED_CROSSOVERS = -1;
     
+    public static final double DEFAULT_SUCCESS_PROB = 0.95;
+    
 }

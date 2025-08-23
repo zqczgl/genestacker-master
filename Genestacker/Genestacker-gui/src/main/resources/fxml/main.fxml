@@ -35,11 +35,15 @@
 
     <Label text="输出文件:" GridPane.columnIndex="0" GridPane.rowIndex="2"
            styleClass="required-label, form-label"/>
-    <TextField fx:id="outputFileField" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="3"
+    <TextField fx:id="outputFileField" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="2"
                promptText="输出文件名 (.zip)" styleClass="form-field"/>
-
-    <!-- 分隔线 -->
-    <Separator GridPane.columnSpan="4" GridPane.rowIndex="3" styleClass="form-separator"/>
+    
+    <Label text="输出目录:" GridPane.columnIndex="0" GridPane.rowIndex="3"
+           styleClass="form-label"/>
+    <TextField fx:id="outputDirField" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="2"
+               promptText="选择输出目录" styleClass="form-field"/>
+    <Button text="浏览..." GridPane.columnIndex="3" GridPane.rowIndex="3"
+            onAction="#handleBrowseOutputDir" styleClass="browse-button, form-button"/>
 
     <!-- 核心参数区域 -->
     <!-- 第一行核心参数 -->
@@ -76,20 +80,32 @@
     <!-- 分隔线 -->
     <Separator GridPane.columnSpan="4" GridPane.rowIndex="8" styleClass="form-separator"/>
 
+    <!-- 启发式策略区域 -->
+    <Label text="启发式策略:" GridPane.columnIndex="0" GridPane.rowIndex="9"
+           styleClass="form-label"/>
+    <HBox GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.columnSpan="3" spacing="15">
+        <Button fx:id="heuristicsConfigButton" text="配置启发式策略" onAction="#handleHeuristicsConfig"
+                styleClass="form-button, primary-button"/>
+        <Label fx:id="heuristicsSummaryLabel" text="平衡模式 (默认)" styleClass="heuristics-summary-label"/>
+    </HBox>
+
+    <!-- 分隔线 -->
+    <Separator GridPane.columnSpan="4" GridPane.rowIndex="10" styleClass="form-separator"/>
+
     <!-- 执行按钮 -->
-    <HBox GridPane.columnSpan="4" GridPane.rowIndex="9"
+    <HBox GridPane.columnSpan="4" GridPane.rowIndex="11"
           alignment="CENTER" spacing="25">
         <Button text="运行 Gene Stacker" onAction="#handleRun"
                 styleClass="run-button, primary-button"/>
     </HBox>
 
     <!-- 分隔线 -->
-    <Separator GridPane.columnSpan="4" GridPane.rowIndex="10" styleClass="form-separator"/>
+    <Separator GridPane.columnSpan="4" GridPane.rowIndex="12" styleClass="form-separator"/>
 
     <!-- 输出区域 -->
-    <Label text="运行日志:" GridPane.columnIndex="0" GridPane.rowIndex="11"
+    <Label text="运行日志:" GridPane.columnIndex="0" GridPane.rowIndex="13"
            styleClass="form-label"/>
     <TextArea fx:id="outputArea" prefRowCount="600" prefColumnCount="600"
-              wrapText="true" GridPane.columnSpan="4" GridPane.rowIndex="12"
+              wrapText="true" GridPane.columnSpan="4" GridPane.rowIndex="14"
               styleClass="output-area, form-textarea"/>
 </GridPane>

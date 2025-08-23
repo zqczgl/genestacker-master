@@ -210,3 +210,97 @@
     -fx-background-radius: 6px;
     -fx-padding: 8px 12px;
 }
+
+/* Radio Buttons */
+.radio-button {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 5px 0;
+}
+
+.radio-button .radio {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.radio-button:selected .radio {
+    -fx-background-color: #3498db;
+    -fx-border-color: #3498db;
+}
+
+.radio-button:selected .dot {
+    -fx-background-color: #ffffff;
+}
+
+/* TitledPane */
+.titled-pane {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #2c3e50;
+}
+
+.titled-pane > .title {
+    -fx-background-color: #ecf0f1;
+    -fx-border-color: #dcdde1;
+    -fx-border-width: 1px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-padding: 8px 12px;
+}
+
+.titled-pane > .content {
+    -fx-border-color: #dcdde1;
+    -fx-border-width: 0 1px 1px 1px;
+    -fx-border-radius: 0 0 6px 6px;
+    -fx-background-radius: 0 0 6px 6px;
+    -fx-padding: 10px;
+}
+
+/* Heuristics Summary */
+.heuristics-summary-label {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+    -fx-padding: 10px 0;
+}
+
+/* Dialog Styles */
+.dialog-grid {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 25px;
+    -fx-hgap: 15px;
+    -fx-vgap: 15px;
+}
+
+.dialog-title {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.dialog-button {
+    -fx-font-family: "Segoe UI", "San Francisco", "Roboto", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 2);
+}
+
+.dialog-button:hover {
+    -fx-background-color: #2980b9;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 6, 0, 0, 3);
+}
+
+.dialog-button:pressed {
+    -fx-background-color: #21618c;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 3, 0, 0, 1);
+}

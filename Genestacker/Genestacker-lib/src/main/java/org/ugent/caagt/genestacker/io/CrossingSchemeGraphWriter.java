@@ -68,12 +68,33 @@ public class CrossingSchemeGraphWriter {
         this.colorScheme = colorScheme;
         df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.UP);
-        String dot = GenestackerResourceBundle.getConfig("dot.path");
-        // resolve home dir if present
-        if (dot.startsWith("~" + File.separator)) {
-            dot = System.getProperty("user.home") + dot.substring(1);
+        
+        // Get DOT path from config
+        String dot = null;
+        try {
+            dot = GenestackerResourceBundle.getConfig("dot.path");
+            logger.debug("DOT path from config: {}", dot);
+            // resolve home dir if present
+            if (dot != null && dot.startsWith("~" + File.separator)) {
+                dot = System.getProperty("user.home") + dot.substring(1);
+                logger.debug("Resolved DOT path: {}", dot);
+            }
+        } catch (Exception e) {
+            logger.error("DOT path not found in config. Graphviz is required for graph generation.");
+            throw new GenestackerException("DOT path not found in config. Graphviz is required for graph generation.", e);
         }
         DOT = dot;
+        System.out.println("DOT path: " + DOT);
+    }
+    
+    /**
+     * Create a new CrossingSchemeGraphWriter with the desired color scheme, requires Graphviz.
+     *
+     * @param colorScheme desired color scheme
+     * @throws GenestackerException if Graphviz is not properly configured
+     */
+    public CrossingSchemeGraphWriter(GraphColorScheme colorScheme) throws GenestackerException {
+        this(GraphFileFormat.PNG, colorScheme); // Default to PNG
     }
 
     public void setFileFormat(GraphFileFormat fileFormat) {
@@ -86,6 +107,21 @@ public class CrossingSchemeGraphWriter {
 
     /**
      * Write a graphical representation of the crossing scheme to the given output file using the external Graphviz
+     * software. Returns a reference to the temporary file containing the scheme's structure 
+     * in the Graphviz definition language. This file will be automatically deleted upon exit, 
+     * so it should be copied if it is desired to be retained.
+     *
+     * @param scheme crossing scheme for which a visualisation is created
+     * @param outputFile output file path
+     * @return file pointer to the temporary Graphviz source file
+     * @throws IOException if the output file can not be written
+     */
+    public File write(CrossingScheme scheme, File outputFile) throws IOException {
+        return writeWithGraphviz(scheme, outputFile);
+    }
+    
+    /**
+     * Write a graphical representation of the crossing scheme to the given output file using the external Graphviz
      * software. Returns a reference to the temporary file containing the scheme's structure in the Graphviz definition
      * language. This file will be automatically deleted upon exit, so it should be copied if it is desired to be
      * retained.
@@ -95,7 +131,8 @@ public class CrossingSchemeGraphWriter {
      * @return file pointer to the temporary Graphviz source file
      * @throws IOException if the Graphviz source file can not be written
      */
-    public File write(CrossingScheme scheme, File outputFile) throws IOException {
+    private File writeWithGraphviz(CrossingScheme scheme, File outputFile) throws IOException {
+        System.out.println("这应该出现");
 
         /*********************/
         /* CREATE DOT SOURCE */
@@ -298,6 +335,7 @@ public class CrossingSchemeGraphWriter {
         /* OUTPUT DOT SOURCE TO TEMP FILE */
         /**********************************/
         File dotSourceFile = Files.createTempFile("graph_", ".graphviz").toFile();
+        logger.debug("Created temporary DOT source file: {}", dotSourceFile.getAbsolutePath());
         dotSourceFile.deleteOnExit();
         try (FileWriter fout = new FileWriter(dotSourceFile)) {
             fout.write(dotSource.toString());
@@ -307,15 +345,18 @@ public class CrossingSchemeGraphWriter {
         /* RUN DOT TO CREATE DIAGRAM */
         /*****************************/
         String[] args = {DOT, "-T" + fileFormat, dotSourceFile.getAbsolutePath(), "-o", outputFile.getAbsolutePath()};
+        logger.debug("Executing command: {} {} {} {} {}", args[0], args[1], args[2], args[3], args[4]);
         Runtime rt = Runtime.getRuntime();
         try {
             // run dot program
             Process p = rt.exec(args);
             // wait for completion
             p.waitFor();
+            logger.debug("DOT execution completed with exit code: {}", p.exitValue());
         } catch (IOException ex) {
             // could not run dot program, issue warning
             logger.warn("Failed to run external GraphViz software, skipping graph creation (check installation instructions and config file: ~/genestacker/config.properties)");
+            logger.warn("Exception details: ", ex);
             // delete file
             outputFile.delete();
         } catch (InterruptedException shouldNotHappen) {

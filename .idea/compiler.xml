@@ -11,5 +11,9 @@
         <module name="Genestacker-cli" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Genestacker (1)" target="1.7" />
+      <module name="genestacker-web" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

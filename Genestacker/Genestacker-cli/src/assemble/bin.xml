@@ -12,10 +12,6 @@
                 <source>${project.build.directory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</source>
                 <destName>genestacker.jar</destName>
             </file>
-            <!-- R script -->
-            <file>
-                <source>../genestacker.R</source>
-            </file>
             <!-- CHANGES -->
             <file>
                 <source>../../CHANGES.md</source>

@@ -237,6 +237,18 @@ public class SeedLotNode {
     }
     
     /**
+     * Get the parental selfing of this seed lot, if any.
+     * 
+     * @return parental selfing of this seed lot, or null if it does not exist
+     */
+    public SelfingNode getParentSelfing(){
+        if (parentCrossing != null && parentCrossing.isSelfing()) {
+            return (SelfingNode) parentCrossing;
+        }
+        return null;
+    }
+    
+    /**
      * Get the number of duplicates of the parental crossing of this seed lot node.
      * In case of an initial seed lot node without parental crossing, 0 is returned.
      * 

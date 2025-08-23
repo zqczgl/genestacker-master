@@ -46,7 +46,7 @@ public class ZIPWriter {
      * </ul>
      *
      * @param pf Pareto frontier
-     * @param format graph file format (e.g. PDF)
+     * @param format graph file format (e.g. PNG, SVG)
      * @param colorScheme graph color scheme
      * @param outputFile output file (extension ".zip" is appended if not already contained in the file name)
      * 
@@ -62,8 +62,8 @@ public class ZIPWriter {
         }
         // name of folder inside ZIP (same as ZIP without extension)
         String inZIPFolder = outputFile.substring(0, outputFile.lastIndexOf('.'));
-        if (inZIPFolder.indexOf('/') != -1) {
-            inZIPFolder = inZIPFolder.substring(outputFile.lastIndexOf('/') + 1);
+        if (inZIPFolder.indexOf('\\') != -1) {
+            inZIPFolder = inZIPFolder.substring(outputFile.lastIndexOf('\\') + 1);
         }
         // create ZIP archive
         CrossingSchemeGraphWriter graphWriter = new CrossingSchemeGraphWriter(format, colorScheme);
@@ -92,12 +92,18 @@ public class ZIPWriter {
                         IOUtils.copy(new FileInputStream(graph), os);
                         os.closeArchiveEntry();
                     }
-                    os.putArchiveEntry(new ZipArchiveEntry(inZIPFolder + "/scheme" + numScheme + ".graphviz"));
-                    IOUtils.copy(new FileInputStream(graphvizSource), os);
-                    os.closeArchiveEntry();
+                    // Only include Graphviz source file if it was generated (not null)
+                    if (graphvizSource != null) {
+                        os.putArchiveEntry(new ZipArchiveEntry(inZIPFolder + "/scheme" + numScheme + ".graphviz"));
+                        IOUtils.copy(new FileInputStream(graphvizSource), os);
+                        os.closeArchiveEntry();
+                    }
                     // delete temp files
                     xml.delete();
                     graph.delete();
+                    if (graphvizSource != null) {
+                        graphvizSource.delete();
+                    }
                 }
             }
         }
